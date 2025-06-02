@@ -48,7 +48,7 @@
 
 <!-- Bloody drip effect from your link -->
 <p align="center">
-  <img src="https://images.creativefabrica.com/products/204/preview/24/I1rxuJsCN/2gvRVMSGrCCfdR7fw49O8yS8Mr-mobile.jpg" width="100%" alt="bloody drip"/>
+  <img src="https://c.tenor.com/opJeYcuQv9wAAAAd/tenor.gif" width="100%" alt="girl"/>
 </p>
 
 </div>
