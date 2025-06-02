@@ -17,9 +17,9 @@
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40" title="JavaScript"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" width="40" title="Ruby"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="40" title="C"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" width="40" title="Rust"/>
+<!-- Rust removed due to 403 -->
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" width="40" title="Batch / Shell"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/curl/curl-original.svg" width="40" title="cURL"/>
+<!-- curl removed due to 403 -->
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" width="40" title="Go"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="40" title="PHP"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40" title="TypeScript"/>
@@ -46,9 +46,9 @@
 
 ---
 
-<!-- Bloody drip effect -->
+<!-- Bloody drip effect from your link -->
 <p align="center">
-  <img src="https://i.imgur.com/jPq3eRj.png" width="100%" alt="bloody drip"/>
+  <img src="https://images.creativefabrica.com/products/204/preview/24/I1rxuJsCN/2gvRVMSGrCCfdR7fw49O8yS8Mr-mobile.jpg" width="100%" alt="bloody drip"/>
 </p>
 
 </div>
