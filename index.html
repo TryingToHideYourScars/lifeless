@@ -593,7 +593,7 @@
             if (retryCount < MAX_RETRIES) {
                 const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 30000);
                 setTimeout(fetchDiscordActivity, retryDelay);
-                updateApiStatus(`Retry in ${Math.ceil(retryDelay/1000)}s`, true);
+                updateApiStatus(`Retry in ${Math.ceil(retryDelay/100)}s`, true);
             } else {
                 showError();
                 updateApiStatus('Failed', true);
