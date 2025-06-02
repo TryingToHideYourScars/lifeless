@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>⌈ 死 の 囁 き ⌋</title>
     <link rel="icon" type="image/png" href="favicon_64px.png" sizes="64x64" />
     <link rel="icon" type="image/png" href="favicon_32px.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicon_16px.png" sizes="16x16" />
     <style>
-    @font-face {
-        font-family: 'Youmurdererbb';
-        src: url('Youmurdererbb-pwoK.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-    }
+        @font-face {
+            font-family: 'Youmurdererbb';
+            src: url('Youmurdererbb-pwoK.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
         body {
             margin: 0;
             padding: 0;
@@ -24,12 +23,78 @@
                 radial-gradient(circle at 10% 20%, rgba(153, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 15%),
                 radial-gradient(circle at 90% 15%, rgba(153, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 20%);
             image-rendering: pixelated;
-            text-align:center;
+            text-align: center;
             font-smooth: never;
             -webkit-font-smoothing: none;
-            color:#000000;
+            color: #000000;
         }
-
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 1.5s ease-in-out, backdrop-filter 1.5s ease-in-out;
+        }
+        #intro-screen.hidden {
+            opacity: 0;
+            backdrop-filter: blur(0);
+            pointer-events: none;
+        }
+        #intro-text {
+            font-family: Times, 'Times New Roman', serif;
+            font-size: 60px;
+            color: #7c0101; /* Darker red for less neon effect */
+            text-shadow: 0 0 3px #4A0000, 0 0 6px #4A0000; /* Reduced glow intensity */
+            cursor: pointer;
+            animation: 
+                flicker 0s infinite,
+                float 3s ease-in-out infinite,
+                shake 0.5s ease-in-out infinite;
+            letter-spacing: 4px;
+            font-style: italic;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+            20% { transform: translate(-2px, 0px) rotate(0.5deg); }
+            30% { transform: translate(2px, 1px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(0.5deg); }
+            50% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+            60% { transform: translate(-2px, 0px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(0.5deg); }
+            90% { transform: translate(1px, 1px) rotate(0deg); }
+            100% { transform: translate(1px, -1px) rotate(-0.5deg); }
+        }
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            5% { opacity: 0.4; }
+            10% { opacity: 0.9; }
+            15% { opacity: 0.3; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            85% { opacity: 0.4; }
+            90% { opacity: 0.9; }
+            95% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         #image-container {
             position: absolute;
             top: 50%;
@@ -42,10 +107,9 @@
             grid-template-columns: repeat(128, 3fr);
             grid-template-rows: repeat(128, 3fr);
         }
-        
         #rgbFilter {
             background-image: url("rgb_filter.png");
-            background-position:0px 0px;
+            background-position: 0px 0px;
             z-index: 100;
             mix-blend-mode: overlay;
             image-rendering: pixelated;
@@ -56,17 +120,15 @@
             pointer-events: none;
             opacity: 0.3;
         }
-        
-@keyframes rgb {
-  from {background-position:0px 0px;}
-  to {background-position:3px 0px;}
-}
-        
+        @keyframes rgb {
+            from { background-position: 0px 0px; }
+            to { background-position: 3px 0px; }
+        }
         #frame {
             background-image: url("fauuxframe.png");
-            background-repeat:none;
-            background-position:center center;
-            background-size:cover;
+            background-repeat: none;
+            background-position: center center;
+            background-size: cover;
             z-index: 90;
             image-rendering: pixelated;
             position: absolute;
@@ -76,30 +138,27 @@
             transform: translate(-50%, -50%);
             width: 480px;
             height: 480px;
-            image-rendering: pixelated;
         }
-
         #discord-frame {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 320px;
-    height: 200px;
-    background: linear-gradient(135deg, rgba(82,47,70,0.3) 0%, rgba(153,91,91,0.5) 100%);
-    border: 2px solid #d2738a; /* bardziej widoczna obwódka */
-    border-radius: 8px;
-    box-shadow: 
-        0 0 20px rgba(210, 115, 138, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0);
-    padding: 16px;
-    backdrop-filter: blur(15px);
-    z-index: 200;
-    animation: frameGlow 3s ease-in-out infinite alternate;
-    display: flex;
-    gap: 12px;
-}
-
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(82,47,70,0.3) 0%, rgba(153,91,91,0.5) 100%);
+            border: 2px solid #d2738a;
+            border-radius: 8px;
+            box-shadow: 
+                0 0 20px rgba(210, 115, 138, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0);
+            padding: 16px;
+            backdrop-filter: blur(15px);
+            z-index: 200;
+            animation: frameGlow 3s ease-in-out infinite alternate;
+            display: flex;
+            gap: 12px;
+        }
         @keyframes frameGlow {
             0% { 
                 box-shadow: 
@@ -115,13 +174,11 @@
                 border-color: #e085a0;
             }
         }
-
         .left-section {
             flex: 1;
             display: flex;
             flex-direction: column;
         }
-
         .right-section {
             width: 90px;
             height: 90px;
@@ -134,39 +191,28 @@
             position: relative;
             overflow: hidden;
         }
-
         .album-cover {
             width: 80px;
             height: 80px;
             border-radius: 6px;
             object-fit: cover;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-            animation: albumSpin 0s linear infinite;
         }
-
-        @keyframes albumSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         .music-icon {
             font-size: 36px;
             color: rgba(255, 255, 255, 0.8);
             animation: musicPulse 2s ease-in-out infinite;
         }
-
         @keyframes musicPulse {
             0%, 100% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.1); opacity: 1; }
         }
-
         .discord-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
             gap: 10px;
         }
-
         .discord-avatar {
             width: 36px;
             height: 36px;
@@ -176,28 +222,24 @@
             animation: avatarPulse 2s ease-in-out infinite;
             overflow: hidden;
         }
-
         @keyframes avatarPulse {
             0%, 100% { border-color: #d2738a; }
             50% { border-color: #e085a0; }
         }
-
         .status-indicator {
             position: absolute;
             bottom: -2px;
             right: -2px;
             width: 12px;
-            height: 12\px;
+            height: 12px;
             border-radius: 50%;
             border: 2px solid #1a1a1a;
             animation: statusBlink 1.5s ease-in-out infinite;
         }
-
         @keyframes statusBlink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
-
         .discord-username {
             color: #ffffff;
             font-family: 'Whitney', -apple-system, sans-serif;
@@ -205,14 +247,12 @@
             font-size: 14px;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
-
         .discord-discriminator {
             color: #d2738a;
             font-family: 'Whitney', -apple-system, sans-serif;
             font-size: 11px;
             font-weight: 500;
         }
-
         .activity-section {
             background: rgba(210, 115, 138, 0.1);
             border-radius: 10px;
@@ -220,7 +260,6 @@
             border: 1px solid rgba(210, 115, 138, 0.3);
             flex: 1;
         }
-
         .activity-title {
             color: #e085a0;
             font-family: 'Whitney', -apple-system, sans-serif;
@@ -230,206 +269,202 @@
             margin-bottom: 12px;
             letter-spacing: 1px;
         }
-
         .activity-content {
             color: #ffffff;
             font-family: 'Whitney', -apple-system, sans-serif;
             font-size: 13px;
             line-height: 1.4;
         }
-
         .activity-name {
             font-weight: 700;
             color: #e085a0;
             margin-bottom: 8px;
             font-size: 15px;
         }
-
         .activity-details {
             color: #cccccc;
             font-size: 12px;
             margin-bottom: 4px;
             font-weight: 500;
         }
-
         .loading-text {
             color: #e085a0;
             font-style: italic;
             animation: loadingDots 1.5s ease-in-out infinite;
         }
-
         @keyframes loadingDots {
             0%, 20% { opacity: 0.4; }
             50% { opacity: 1; }
             80%, 100% { opacity: 0.4; }
         }
-
         .offline-status {
             color: #888888;
             font-style: italic;
         }
-
         .spotify-activity {
             background: linear-gradient(135deg, rgba(30, 215, 96, 0.2) 0%, rgba(30, 215, 96, 0.1) 100%);
             border-color: rgba(30, 215, 96, 0.5);
         }
-
         .game-activity {
             background: linear-gradient(135deg, rgba(114, 137, 218, 0.2) 0%, rgba(114, 137, 218, 0.1) 100%);
             border-color: rgba(114, 137, 218, 0.5);
         }
-
         .custom-status {
             background: linear-gradient(135deg, rgba(210, 115, 138, 0.2) 0%, rgba(224, 133, 160, 0.1) 100%);
             border-color: rgba(210, 115, 138, 0.5);
         }
-        
-      h1 {
-        font-size:16px;
-	      font-family:Times, "Times New Roman", serif;
-	      font-weight:normal;
-	      letter-spacing:4px;
-	      margin-top:5px;
-	      font-style:italic;
-	      opacity:0;
-	      animation: fadeUp 2s ease-in-out forwards, flicker 8s infinite 2s;
-        text-shadow: 0 0 5px #990000, 0 0 10px #990000;
-        position: relative;
-        z-index: 1000;
+        h1 {
+            font-size: 16px;
+            font-family: Times, 'Times New Roman', serif;
+            font-weight: normal;
+            letter-spacing: 4px;
+            margin-top: 5px;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeUp 2s ease-in-out forwards, flicker 8s infinite 2s;
+            text-shadow: 0 0 5px #990000, 0 0 10px #990000;
+            position: relative;
+            z-index: 1000;
         }
-        
- @keyframes fadeUp {
-  from {opacity:0; transform: translateY(10px);}
-  to {opacity:1; transform: translateY(0);}
-}
-
-@keyframes flicker {
-  0% {opacity:0.8;}
-  5% {opacity:0.2;}
-  10% {opacity:0.9;}
-  15% {opacity:0.1;}
-  20% {opacity:1;}
-  80% {opacity:1;}
-  85% {opacity:0.2;}
-  90% {opacity:0.9;}
-  95% {opacity:0.3;}
-  100% {opacity:0.8;}
-}
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-#god {
-  opacity:0;
-  animation: fadeUp 2s ease-in-out forwards;
-  animation-delay: 1s;
-  width:100%;
-  height:100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
-  
-    #counter {
-        position: fixed;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        text-align: center;
-        width: 100%;
-        font-size: 14px;
-        font-family:Times, "Times New Roman", serif;
-	      font-weight:normal;
-	      letter-spacing:4px;
-	      font-style:italic;
-        color: #990000;
-        opacity: 0;
-        animation: fadeUp 2s ease-in-out forwards, shake 5s infinite 2s;
-        animation-delay: 1s;
-        text-shadow: 0 0 5px #990000, 0 0 10px #990000;
-    }
-    
-    #blood-splatter {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: 
-            radial-gradient(ellipse at 5% 10%, rgba(153, 0, 0, 0.3) 0%, rgba(153, 0, 0, 0.2) 5%, rgba(0, 0, 0, 0) 15%),
-            radial-gradient(ellipse at 95% 5%, rgba(153, 0, 0, 0.25) 0%, rgba(153, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0) 20%);
-        opacity: 0.4;
-        pointer-events: none;
-        z-index: 999;
-    }
-    
-    #static {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
-        opacity: 0.05;
-        pointer-events: none;
-        z-index: 99;
-    }
-
-    #api-status {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        color: #9900005b;
-        font-size: 10px;
-        font-family: monospace;
-        z-index: 1001;
-        padding: 5px 8px;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 4px;
-        border: 1px solid #3a0202;
-    }
+        #god {
+            opacity: 0;
+            animation: fadeUp 2s ease-in-out forwards;
+            animation-delay: 1s;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #counter {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            font-family: Times, 'Times New Roman', serif;
+            font-weight: normal;
+            letter-spacing: 4px;
+            font-style: italic;
+            color: #990000;
+            opacity: 0;
+            animation: fadeUp 2s ease-in-out forwards, shake 5s infinite 2s;
+            animation-delay: 1s;
+            text-shadow: 0 0 5px #990000, 0 0 10px #990000;
+            cursor: pointer;
+        }
+        #blood-splatter {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse at 5% 10%, rgba(153, 0, 0, 0.3) 0%, rgba(153, 0, 0, 0.2) 5%, rgba(0, 0, 0, 0) 15%),
+                radial-gradient(ellipse at 95% 5%, rgba(153, 0, 0, 0.25) 0%, rgba(153, 0, 0, 0.15) 5%, rgba(0, 0, 0, 0) 20%);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 999;
+        }
+        #static {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 99;
+        }
+        #api-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: #9900005b;
+            font-size: 10px;
+            font-family: monospace;
+            z-index: 1001;
+            padding: 5px 8px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            border: 1px solid #3a0202;
+        }
+        #volume-control {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 9999;
+            width: 120px;
+            height: 15px;
+            background-color: rgba(10, 10, 10, 0.8);
+            border: 1px solid #990000;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 0 8px rgba(153, 0, 0, 0.4);
+        }
+        #volume-level {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #3a0202, #990000);
+            pointer-events: none;
+            transition: width 0.15s linear;
+        }
+        #volume-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+        #volume-text {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            font-family: monospace;
+            color: #990000;
+            font-size: 10px;
+            line-height: 15px;
+            text-shadow: 0 0 3px #990000;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+    <div id="intro-screen">
+        <div id="intro-text">W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛</div>
+    </div>
     <div id="blood-splatter"></div>
     <div id="static"></div>
     <div id="rgbFilter"></div>
     <div id="api-status">API: Connecting...</div>
-    
-    <!-- Background audio with direct inline controls -->
-    <audio id="background-audio" loop autoplay muted="false" preload="auto" style="display: none;">
+    <audio id="background-audio" loop preload="auto" style="display:none;">
         <source src="empty.wav" type="audio/wav">
-        Your browser does not support the audio element.
     </audio>
-    
-    <!-- Fallback audio with embed -->
-    <embed src="empty.wav" autostart="true" loop="true" hidden="true" volume="0.05" id="embed-audio">
-    
+    <div id="volume-control">
+        <div id="volume-level"></div>
+        <input type="range" id="volume-slider" min="0" max="100" value="50">
+        <div id="volume-text">50%</div>
+    </div>
     <h1>なぜ私はここにいるのか<br>
-存在の意味を探して<br>
-答えのない闇の中で</h1>
-    
+    存在の意味を探して<br>
+    答えのない闇の中で</h1>
     <div id="god">
         <div style="position: relative; margin-top: 50px;">
             <div id="frame"></div>
             <div id="image-container"></div>
-            
-            <!-- Discord Activity Frame -->
             <div id="discord-frame">
                 <div class="left-section">
                     <div class="discord-header">
@@ -442,7 +477,6 @@
                             <div class="discord-discriminator" id="discriminator">#0000</div>
                         </div>
                     </div>
-                    
                     <div class="activity-section" id="activity-section">
                         <div class="activity-title" id="activity-title">ACTIVITY</div>
                         <div class="activity-content" id="activity-content">
@@ -450,16 +484,13 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="right-section" id="album-section">
                     <div class="music-icon">⏳</div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div id="counter" style="cursor: pointer;" title="Click to copy to clipboard">W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛ <span id="imageCounter">0</span></div>
-    
+    <div id="counter" title="Click to copy to clipboard">W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛ <span id="imageCounter">0</span></div>
     <div style="text-align: center; width: 100%; margin-top: 40px; margin-bottom: 20px; position: fixed; bottom: 50px; left: 0; right: 0;">
         <h2 id="visitor-info" style="font-family: Times, 'Times New Roman', serif; color: #990000; font-size: 1.2em; display: inline-block; opacity: 0; text-shadow: 0 0 5px #990000, 0 0 10px #990000; font-style: italic; letter-spacing: 2px; animation: fadeUp 2s ease-in-out forwards 1.5s, flicker 8s infinite 3.5s;"></h2>
     </div>
@@ -476,124 +507,100 @@
     const USER_ID = '790417711640477696';
 
     document.addEventListener('DOMContentLoaded', function () {
-        initializePage();
+        setupIntroScreen();
         setupClipboardCopy();
-        fetchVisitorInfo();
-        setupBackgroundAudio();
     });
-    
-    // Setup background audio to play automatically at low volume
-    function setupBackgroundAudio() {
-        // Try multiple approaches to play audio
-        
-        // Approach 1: HTML5 Audio API
+
+    function setupIntroScreen() {
+        const introScreen = document.getElementById('intro-screen');
+        const introText = document.getElementById('intro-text');
         const audio = document.getElementById('background-audio');
-        if (audio) {
-            audio.volume = 0.05;
-            audio.muted = false;
-            
-            // Force play with multiple attempts
-            const playAudio = function() {
-                audio.play()
-                    .then(() => console.log('Audio playing via HTML5 Audio'))
-                    .catch(e => console.log('HTML5 Audio play failed:', e));
-            };
-            
-            playAudio(); // Try immediately
-            setTimeout(playAudio, 1000); // Try again after 1 second
-            setTimeout(playAudio, 2000); // Try again after 2 seconds
-            
-            // Try on any user interaction
-            ['click', 'touchstart', 'keydown', 'mousemove'].forEach(event => {
-                document.addEventListener(event, function playOnce() {
-                    playAudio();
-                    document.removeEventListener(event, playOnce);
-                }, { once: true });
-            });
-        }
-        
-        // Approach 2: Create audio dynamically
-        try {
-            const dynamicAudio = new Audio('empty.wav');
-            dynamicAudio.loop = true;
-            dynamicAudio.volume = 0.05;
-            dynamicAudio.play()
-                .then(() => console.log('Dynamic Audio playing'))
-                .catch(e => console.log('Dynamic Audio failed:', e));
-        } catch (e) {
-            console.log('Dynamic Audio creation failed:', e);
-        }
-        
-        // Approach 3: Web Audio API as last resort
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const request = new XMLHttpRequest();
-            request.open('GET', 'empty.wav', true);
-            request.responseType = 'arraybuffer';
-            
-            request.onload = function() {
-                audioContext.decodeAudioData(request.response, function(buffer) {
-                    const source = audioContext.createBufferSource();
-                    source.buffer = buffer;
-                    source.loop = true;
-                    
-                    // Create gain node for volume control
-                    const gainNode = audioContext.createGain();
-                    gainNode.gain.value = 0.05; // 5% volume
-                    
-                    // Connect the source to gain node and gain to output
-                    source.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    // Start playback
-                    source.start(0);
-                    console.log('Web Audio API playing');
-                }, function(e) {
-                    console.log('Audio decoding failed:', e);
-                });
-            };
-            
-            request.onerror = function() {
-                console.log('XHR error loading audio');
-            };
-            
-            request.send();
-        } catch (e) {
-            console.log('Web Audio API failed:', e);
-        }
+
+        introText.addEventListener('click', function () {
+            // Copy text to clipboard
+            copyTextToClipboard('W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛');
+
+            // Hide intro screen
+            introScreen.classList.add('hidden');
+
+            // Play audio after user interaction
+            audio.volume = 0.5;
+            audio.play().catch(e => console.error('Audio play failed:', e));
+
+            // Initialize page content
+            initializePage();
+            fetchVisitorInfo();
+
+            // Remove intro screen after transition
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+            }, 1500);
+        });
+    }
+
+    function setupVolumeControl() {
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeLevel = document.getElementById('volume-level');
+        const volumeText = document.getElementById('volume-text');
+        const audio = document.getElementById('background-audio');
+
+        if (!volumeSlider || !volumeLevel) return;
+
+        const savedVolume = localStorage.getItem('userVolume') || 0.5;
+        const sliderValue = Math.round(parseFloat(savedVolume) * 100);
+
+        volumeSlider.value = sliderValue;
+        volumeLevel.style.width = sliderValue + '%';
+        volumeText.textContent = sliderValue + '%';
+        audio.volume = parseFloat(savedVolume);
+
+        volumeSlider.addEventListener('input', function () {
+            const value = this.value;
+            volumeLevel.style.width = value + '%';
+            volumeText.textContent = value + '%';
+            const volume = value / 100;
+            audio.volume = volume;
+            localStorage.setItem('userVolume', volume);
+
+            volumeLevel.style.boxShadow = '0 0 5px #990000';
+            setTimeout(() => {
+                volumeLevel.style.boxShadow = 'none';
+            }, 300);
+
+            volumeLevel.style.background = value > 70 ? 'linear-gradient(90deg, #3a0202, #990000, #ff0000)' :
+                                          value > 30 ? 'linear-gradient(90deg, #3a0202, #990000)' :
+                                          'linear-gradient(90deg, #3a0202, #660000)';
+        });
+
+        volumeSlider.addEventListener('mouseover', () => {
+            volumeLevel.style.boxShadow = '0 0 8px #990000';
+            volumeText.style.textShadow = '0 0 5px #990000';
+        });
+
+        volumeSlider.addEventListener('mouseout', () => {
+            volumeLevel.style.boxShadow = 'none';
+            volumeText.style.textShadow = '0 0 3px #990000';
+        });
     }
 
     function initializePage() {
         createInitialGrid();
-        
-        // Start pixel animation
         pixelUpdateInterval = setInterval(updateRandomImage, 5);
-        
-        // Initial Discord fetch with delay to ensure page is loaded
-        setTimeout(() => {
-            fetchDiscordActivity();
-        }, 1000);
-        
-        // Update Discord activity every 15 seconds for more responsive updates
+        setTimeout(fetchDiscordActivity, 1000);
         discordUpdateInterval = setInterval(fetchDiscordActivity, 15000);
-        
-        // Add random screen glitches
-        glitchInterval = setInterval(function() {
+        glitchInterval = setInterval(() => {
             if (Math.random() < 0.03) {
                 document.body.style.filter = 'invert(100%)';
-                setTimeout(function() {
-                    document.body.style.filter = 'none';
-                }, 50 + Math.random() * 100);
+                setTimeout(() => document.body.style.filter = 'none', 50 + Math.random() * 100);
             }
         }, 3000);
-        
+        setupVolumeControl();
         isPageReady = true;
     }
 
     function createInitialGrid() {
         const imageContainer = document.getElementById('image-container');
         imageContainer.innerHTML = '';
-
         for (let i = 0; i < 128; i++) {
             for (let j = 0; j < 128; j++) {
                 const pixel = document.createElement('div');
@@ -606,14 +613,11 @@
 
     function updateRandomImage() {
         if (!isPageReady) return;
-        
         const imageContainer = document.getElementById('image-container');
         const pixels = imageContainer.children;
-
         for (let i = 0; i < pixels.length; i++) {
             pixels[i].style.backgroundColor = getRandomColor();
         }
-
         generatedImages++;
         const counterElement = document.getElementById('imageCounter');
         if (counterElement) {
@@ -623,8 +627,7 @@
 
     function getRandomColor() {
         const colors = ['#000', '#c1b492', '#d2738a'];
-        const randomIndex = Math.floor(Math.random() * colors.length);
-        return colors[randomIndex];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
     function updateApiStatus(status, isError = false) {
@@ -636,34 +639,21 @@
         }
     }
 
-    // Enhanced Discord Lanyard API Integration
     async function fetchDiscordActivity() {
         if (!isPageReady) return;
-        
         try {
             updateApiStatus('Fetching...');
-            
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000);
-            
             const response = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`, {
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Cache-Control': 'no-cache'
-                },
+                headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' },
                 signal: controller.signal,
                 cache: 'no-store'
             });
-            
             clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-            
             if (data.success && data.data) {
                 updateDiscordDisplay(data.data);
                 updateApiStatus('Connected');
@@ -672,11 +662,9 @@
             } else {
                 throw new Error('API returned unsuccessful response');
             }
-            
         } catch (error) {
             console.error('Discord API Error:', error);
             retryCount++;
-            
             if (error.name === 'AbortError') {
                 updateApiStatus('Timeout', true);
             } else if (error.message.includes('HTTP')) {
@@ -684,8 +672,6 @@
             } else {
                 updateApiStatus('Network Error', true);
             }
-            
-            // Implement exponential backoff for retries
             if (retryCount < MAX_RETRIES) {
                 const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 30000);
                 setTimeout(fetchDiscordActivity, retryDelay);
@@ -698,60 +684,35 @@
     }
 
     function updateDiscordDisplay(userData) {
-        try {
-            // Update avatar with better error handling
-            const avatarImg = document.getElementById('avatar-img');
-            if (avatarImg && userData.discord_user) {
-                if (userData.discord_user.avatar) {
-                    const avatarUrl = `https://cdn.discordapp.com/avatars/${userData.discord_user.id}/${userData.discord_user.avatar}.${userData.discord_user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=128`;
-                    avatarImg.src = avatarUrl;
-                    avatarImg.onerror = function() {
-                        const defaultAvatar = userData.discord_user.discriminator === '0' 
-                            ? `https://cdn.discordapp.com/embed/avatars/${(parseInt(userData.discord_user.id) >> 22) % 6}.png`
-                            : `https://cdn.discordapp.com/embed/avatars/${userData.discord_user.discriminator % 5}.png`;
-                        this.src = defaultAvatar;
-                    };
-                } else {
-                    const defaultAvatar = userData.discord_user.discriminator === '0' 
+        const avatarImg = document.getElementById('avatar-img');
+        if (avatarImg && userData.discord_user) {
+            if (userData.discord_user.avatar) {
+                avatarImg.src = `https://cdn.discordapp.com/avatars/${userData.discord_user.id}/${userData.discord_user.avatar}.${userData.discord_user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=128`;
+                avatarImg.onerror = () => {
+                    avatarImg.src = userData.discord_user.discriminator === '0' 
                         ? `https://cdn.discordapp.com/embed/avatars/${(parseInt(userData.discord_user.id) >> 22) % 6}.png`
                         : `https://cdn.discordapp.com/embed/avatars/${userData.discord_user.discriminator % 5}.png`;
-                    avatarImg.src = defaultAvatar;
-                }
-            }
-
-            // Update username and discriminator
-            const username = document.getElementById('username');
-            const discriminator = document.getElementById('discriminator');
-            if (username && userData.discord_user) {
-                username.textContent = userData.discord_user.global_name || userData.discord_user.display_name || userData.discord_user.username || 'Unknown User';
-                if (discriminator) {
-                    if (userData.discord_user.discriminator === '0') {
-                        discriminator.textContent = `@${userData.discord_user.username}`;
-                    } else {
-                        discriminator.textContent = `#${userData.discord_user.discriminator}`;
-                    }
-                }
-            }
-
-            // Update status indicator
-            const statusIndicator = document.getElementById('status-indicator');
-            if (statusIndicator) {
-                const statusColors = {
-                    'online': '#43b581',
-                    'idle': '#faa61a',
-                    'dnd': '#f04747',
-                    'offline': '#747f8d'
                 };
-                statusIndicator.style.backgroundColor = statusColors[userData.discord_status] || statusColors['offline'];
+            } else {
+                avatarImg.src = userData.discord_user.discriminator === '0' 
+                    ? `https://cdn.discordapp.com/embed/avatars/${(parseInt(userData.discord_user.id) >> 22) % 6}.png`
+                    : `https://cdn.discordapp.com/embed/avatars/${userData.discord_user.discriminator % 5}.png`;
             }
-
-            // Update activity with enhanced logic
-            updateActivity(userData);
-            
-        } catch (error) {
-            console.error('Error updating Discord display:', error);
-            showError();
         }
+        const username = document.getElementById('username');
+        const discriminator = document.getElementById('discriminator');
+        if (username && userData.discord_user) {
+            username.textContent = userData.discord_user.global_name || userData.discord_user.display_name || userData.discord_user.username || 'Unknown User';
+            discriminator.textContent = userData.discord_user.discriminator === '0' 
+                ? `@${userData.discord_user.username}` 
+                : `#${userData.discord_user.discriminator}`;
+        }
+        const statusIndicator = document.getElementById('status-indicator');
+        if (statusIndicator) {
+            const statusColors = { 'online': '#43b581', 'idle': '#faa61a', 'dnd': '#f04747', 'offline': '#747f8d' };
+            statusIndicator.style.backgroundColor = statusColors[userData.discord_status] || statusColors['offline'];
+        }
+        updateActivity(userData);
     }
 
     function updateActivity(userData) {
@@ -759,57 +720,37 @@
         const activitySection = document.getElementById('activity-section');
         const activityTitle = document.getElementById('activity-title');
         const albumSection = document.getElementById('album-section');
-        
         if (!activityContent || !activitySection || !albumSection || !activityTitle) return;
-        
-        // Reset classes
         activitySection.className = 'activity-section';
-        
-        try {
-            // Check for Spotify activity first
-            if (userData.listening_to_spotify && userData.spotify) {
-                displaySpotifyActivity(userData.spotify, activityContent, activitySection, activityTitle, albumSection);
-            }
-            // Check for other activities
-            else if (userData.activities && userData.activities.length > 0) {
-                const activities = userData.activities.filter(a => a.type !== 4); // Filter out custom status
-                const customStatus = userData.activities.find(a => a.type === 4);
-                
-                if (activities.length > 0) {
-                    displayGameActivity(activities[0], activityContent, activitySection, activityTitle, albumSection);
-                } else if (customStatus) {
-                    displayCustomStatus(customStatus, activityContent, activitySection, activityTitle, albumSection);
-                } else {
-                    displayNoActivity(activityContent, activitySection, activityTitle, albumSection);
-                }
+        if (userData.listening_to_spotify && userData.spotify) {
+            displaySpotifyActivity(userData.spotify, activityContent, activitySection, activityTitle, albumSection);
+        } else if (userData.activities && userData.activities.length > 0) {
+            const activities = userData.activities.filter(a => a.type !== 4);
+            const customStatus = userData.activities.find(a => a.type === 4);
+            if (activities.length > 0) {
+                displayGameActivity(activities[0], activityContent, activitySection, activityTitle, albumSection);
+            } else if (customStatus) {
+                displayCustomStatus(customStatus, activityContent, activitySection, activityTitle, albumSection);
             } else {
                 displayNoActivity(activityContent, activitySection, activityTitle, albumSection);
             }
-        } catch (error) {
-            console.error('Error updating activity:', error);
-            showError();
+        } else {
+            displayNoActivity(activityContent, activitySection, activityTitle, albumSection);
         }
     }
 
     function displaySpotifyActivity(spotify, activityContent, activitySection, activityTitle, albumSection) {
         activitySection.classList.add('spotify-activity');
         activityTitle.textContent = 'LISTENING TO SPOTIFY';
-        
         activityContent.innerHTML = `
             <div class="activity-name">🎵 ${spotify.song || 'Unknown Song'}</div>
             <div class="activity-details">by ${spotify.artist || 'Unknown Artist'}</div>
             <div class="activity-details">on ${spotify.album || 'Unknown Album'}</div>
         `;
-        
-        // Update album cover
         if (spotify.album_art_url) {
             const img = new Image();
-            img.onload = function() {
-                albumSection.innerHTML = `<img src="${spotify.album_art_url}" alt="Album Cover" class="album-cover">`;
-            };
-            img.onerror = function() {
-                albumSection.innerHTML = '<div class="music-icon">🎵</div>';
-            };
+            img.onload = () => albumSection.innerHTML = `<img src="${spotify.album_art_url}" alt="Album Cover" class="album-cover">`;
+            img.onerror = () => albumSection.innerHTML = '<div class="music-icon">🎵</div>';
             img.src = spotify.album_art_url;
         } else {
             albumSection.innerHTML = '<div class="music-icon">🎵</div>';
@@ -818,29 +759,12 @@
 
     function displayGameActivity(activity, activityContent, activitySection, activityTitle, albumSection) {
         activitySection.classList.add('game-activity');
-        
-        const activityTypeNames = {
-            0: 'PLAYING',
-            1: 'STREAMING',
-            2: 'LISTENING TO',
-            3: 'WATCHING',
-            5: 'COMPETING IN'
-        };
-        
+        const activityTypeNames = { 0: 'PLAYING', 1: 'STREAMING', 2: 'LISTENING TO', 3: 'WATCHING', 5: 'COMPETING IN' };
         activityTitle.textContent = activityTypeNames[activity.type] || 'ACTIVITY';
-        
         let activityHtml = `<div class="activity-name">${getActivityIcon(activity)} ${activity.name || 'Unknown Activity'}</div>`;
-        
-        if (activity.details) {
-            activityHtml += `<div class="activity-details">${activity.details}</div>`;
-        }
-        if (activity.state) {
-            activityHtml += `<div class="activity-details">${activity.state}</div>`;
-        }
-        
+        if (activity.details) activityHtml += `<div class="activity-details">${activity.details}</div>`;
+        if (activity.state) activityHtml += `<div class="activity-details">${activity.state}</div>`;
         activityContent.innerHTML = activityHtml;
-        
-        // Show activity image
         if (activity.assets && activity.assets.large_image) {
             loadActivityImage(activity, albumSection);
         } else {
@@ -851,19 +775,9 @@
     function displayCustomStatus(status, activityContent, activitySection, activityTitle, albumSection) {
         activitySection.classList.add('custom-status');
         activityTitle.textContent = 'CUSTOM STATUS';
-        
-        let statusText = '';
-        if (status.emoji) {
-            statusText += status.emoji.name ? `${status.emoji.name} ` : '';
-        }
-        if (status.state) {
-            statusText += status.state;
-        }
-        
-        activityContent.innerHTML = `
-            <div class="activity-name">${statusText || 'Custom status set'}</div>
-        `;
-        
+        let statusText = status.emoji?.name ? `${status.emoji.name} ` : '';
+        statusText += status.state || 'Custom status set';
+        activityContent.innerHTML = `<div class="activity-name">${statusText}</div>`;
         albumSection.innerHTML = '<div class="music-icon">💭</div>';
     }
 
@@ -875,28 +789,16 @@
 
     function getActivityIcon(activity) {
         const icons = {
-            'Spotify': '🎵',
-            'Discord': '💬',
-            'Visual Studio Code': '💻',
-            'Chrome': '🌐',
-            'Firefox': '🦊',
-            'Steam': '🎮',
-            'League of Legends': '⚔️',
-            'Valorant': '🎯',
-            'Minecraft': '⛏️',
-            'Roblox': '🟩',
-            'YouTube': '📺',
-            'Netflix': '🎬',
-            'Twitch': '💜'
+            'Spotify': '🎵', 'Discord': '💬', 'Visual Studio Code': '💻', 'Chrome': '🌐', 'Firefox': '🦊',
+            'Steam': '🎮', 'League of Legends': '⚔️', 'Valorant': '🎯', 'Minecraft': '⛏️', 'Roblox': '🟩',
+            'YouTube': '📺', 'Netflix': '🎬', 'Twitch': '💜'
         };
-        
         const name = activity.name || '';
         return icons[name] || (activity.type === 0 ? '🎮' : activity.type === 2 ? '🎵' : activity.type === 3 ? '📺' : '🔷');
     }
 
     function loadActivityImage(activity, albumSection) {
         let imageUrl = '';
-        
         if (activity.assets.large_image.startsWith('mp:')) {
             imageUrl = `https://media.discordapp.net/${activity.assets.large_image.slice(3)}`;
         } else if (activity.assets.large_image.startsWith('spotify:')) {
@@ -904,15 +806,10 @@
         } else if (activity.application_id) {
             imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.png`;
         }
-        
         if (imageUrl) {
             const img = new Image();
-            img.onload = function() {
-                albumSection.innerHTML = `<img src="${imageUrl}" alt="Activity Image" class="album-cover">`;
-            };
-            img.onerror = function() {
-                albumSection.innerHTML = `<div class="music-icon">${getActivityIcon(activity)}</div>`;
-            };
+            img.onload = () => albumSection.innerHTML = `<img src="${imageUrl}" alt="Activity Image" class="album-cover">`;
+            img.onerror = () => albumSection.innerHTML = `<div class="music-icon">${getActivityIcon(activity)}</div>`;
             img.src = imageUrl;
         } else {
             albumSection.innerHTML = `<div class="music-icon">${getActivityIcon(activity)}</div>`;
@@ -926,7 +823,6 @@
         const activityTitle = document.getElementById('activity-title');
         const albumSection = document.getElementById('album-section');
         const statusIndicator = document.getElementById('status-indicator');
-        
         if (username) username.textContent = 'Connection Error';
         if (discriminator) discriminator.textContent = '';
         if (activityTitle) activityTitle.textContent = 'ERROR';
@@ -935,263 +831,82 @@
         if (statusIndicator) statusIndicator.style.backgroundColor = '#f04747';
     }
 
-    // Enhanced visibility change handling
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            // Pause non-essential intervals when tab is hidden
-            if (pixelUpdateInterval) clearInterval(pixelUpdateInterval);
-            if (glitchInterval) clearInterval(glitchInterval);
-            updateApiStatus('Paused (Hidden)');
-        } else {
-            // Resume intervals when tab becomes active
-            if (isPageReady) {
-                pixelUpdateInterval = setInterval(updateRandomImage, 5);
-                glitchInterval = setInterval(function() {
-                    if (Math.random() < 0.03) {
-                        document.body.style.filter = 'invert(100%)';
-                        setTimeout(function() {
-                            document.body.style.filter = 'none';
-                        }, 50 + Math.random() * 100);
-                    }
-                }, 3000);
-                
-                // Fetch fresh data when tab becomes visible again
-                setTimeout(fetchDiscordActivity, 500);
-            }
-        }
-    });
-
-    // Network status monitoring
-    window.addEventListener('online', function() {
-        updateApiStatus('Network Online');
-        setTimeout(fetchDiscordActivity, 1000);
-    });
-
-    window.addEventListener('offline', function() {
-        updateApiStatus('Network Offline', true);
-    });
-
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', function(e) {
-        if (pixelUpdateInterval) clearInterval(pixelUpdateInterval);
-        if (discordUpdateInterval) clearInterval(discordUpdateInterval);
-        if (glitchInterval) clearInterval(glitchInterval);
-    });
-
-    // Debug mode - press 'D' to force refresh Discord data
-    document.addEventListener('keydown', function(e) {
-        if (e.key.toLowerCase() === 'd' && e.ctrlKey) {
-            e.preventDefault();
-            console.log('Force refreshing Discord data...');
-            retryCount = 0;
-            fetchDiscordActivity();
-        }
-    });
-
-    // Setup clipboard copy functionality
-    function setupClipboardCopy() {
-        // Make the counter element clickable for copying
-        const counterElement = document.getElementById('counter');
-        if (counterElement) {
-            // Try to copy on page load using the newer Clipboard API
-            tryAutoCopyToClipboard();
-            
-            // Also add click event for manual copying
-            counterElement.addEventListener('click', function() {
-                const textToCopy = 'W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛';
-                copyTextToClipboard(textToCopy);
-            });
-        }
-    }
-    
-    // Try to auto-copy using the modern Clipboard API - force copy without permission
-    function tryAutoCopyToClipboard() {
-        const textToCopy = 'W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛';
-        
-        // Try multiple methods to force copy without permission
-        
-        // Method 1: Try the modern Clipboard API
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(textToCopy)
-                .then(() => {
-                    showNotification('Text copied to clipboard');
-                    console.log('Text auto-copied to clipboard using Clipboard API');
-                })
-                .catch(err => {
-                    console.log('Clipboard API failed, trying fallback methods: ', err);
-                    // Try fallback methods
-                    fallbackCopyToClipboard(textToCopy);
-                });
-        } else {
-            // Method 2: Fallback to the older execCommand method
-            fallbackCopyToClipboard(textToCopy);
-        }
-        
-        // Try again after a short delay (some browsers need user interaction first)
-        setTimeout(() => {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(textToCopy).catch(() => {});
-            } else {
-                fallbackCopyToClipboard(textToCopy);
-            }
-        }, 1000);
-    }
-    
-    // Function to copy text to clipboard
     function copyTextToClipboard(text) {
-        // Try modern Clipboard API first
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    showNotification('Text copied to clipboard');
-                })
-                .catch(err => {
-                    console.error('Clipboard API failed:', err);
-                    fallbackCopyToClipboard(text);
-                });
-        } else {
+        try {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Text copied to clipboard');
+            }).catch(() => {
+                fallbackCopyToClipboard(text);
+            });
+        } catch (e) {
             fallbackCopyToClipboard(text);
         }
     }
-    
-    // Fallback copy method using execCommand
+
     function fallbackCopyToClipboard(text) {
         try {
-            // Create a temporary input element
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            // Execute the copy command
-            const successful = document.execCommand('copy');
-            document.body.removeChild(textArea);
-            
-            if (successful) {
-                showNotification('Text copied to clipboard');
-                console.log('Text copied to clipboard using execCommand');
-            } else {
-                // Try one more time with a user-triggered event simulation
-                const counterElement = document.getElementById('counter');
-                if (counterElement) {
-                    // Simulate a user click
-                    counterElement.click();
-                }
-                console.error('execCommand copy failed, tried simulating user interaction');
-            }
-        } catch (err) {
-            // Even if it fails, don't show failure message to user
-            console.error('Failed to copy text to clipboard:', err);
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showNotification('Text copied to clipboard');
+        } catch (e) {
+            console.error('Clipboard copy failed:', e);
+            showNotification('Failed to copy text', 2000);
         }
     }
-    
+
     async function fetchVisitorInfo() {
         try {
             const response = await fetch('https://ipwho.is/');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             const data = await response.json();
             if (data && data.success) {
                 displayVisitorInfo(data);
             } else {
-                console.error('Failed to fetch IP data:', data);
-                displayVisitorInfo({
-                    ip: 'unknown',
-                    connection: { isp: 'unknown' },
-                    country: 'unknown',
-                    latitude: '??',
-                    longitude: '??'
-                });
+                displayVisitorInfo({ ip: 'unknown', connection: { isp: 'unknown' }, country: 'unknown', latitude: '??', longitude: '??' });
             }
         } catch (error) {
             console.error('Error fetching visitor info:', error);
-            displayVisitorInfo({
-                ip: 'unknown',
-                connection: { isp: 'unknown' },
-                country: 'unknown',
-                latitude: '??',
-                longitude: '??'
-            });
+            displayVisitorInfo({ ip: 'unknown', connection: { isp: 'unknown' }, country: 'unknown', latitude: '??', longitude: '??' });
         }
     }
-    
-    // Display visitor information in Japanese-styled text
+
     function displayVisitorInfo(data) {
-        // Make sure we're using the correct visitor info element below the frame
         const visitorInfoElement = document.getElementById('visitor-info');
-        if (!visitorInfoElement) {
-            console.error('Visitor info element not found');
-            return;
-        }
-        
-        // Apply glitch effect to text
+        if (!visitorInfoElement) return;
         const glitchText = (text) => {
-            // Add random combining diacritical marks to create a glitched effect
             const diacriticalMarks = ['\u0337', '\u0328', '\u031b', '\u0336', '\u0322', '\u0335', '\u0327', '\u0338'];
             let result = '';
             for (let i = 0; i < text.length; i++) {
-                // Randomly vary the brightness of each character
                 const brightness = Math.random();
-                let charStyle = '';
-                
-                // Apply different styling based on brightness
-                if (brightness < 0.2) {
-                    // Dim character but still readable
-                    charStyle = `<span style="opacity: 0.4; color: #990000; text-shadow: none;">${text[i]}</span>`;
-                } else if (brightness < 0.6) {
-                    // Medium brightness
-                    charStyle = `<span style="opacity: 0.7; color: #990000; text-shadow: 0 0 2px #990000;">${text[i]}</span>`;
-                } else if (brightness < 0.9) {
-                    // Brighter character
-                    charStyle = `<span style="color: #990000; text-shadow: 0 0 5px #990000;">${text[i]}</span>`;
-                } else {
-                    // Occasionally very bright character
-                    charStyle = `<span style="color: #990000; text-shadow: 0 0 5px #990000, 0 0 10px #990000;">${text[i]}</span>`;
-                }
-                
+                let charStyle = brightness < 0.2 ? `<span style="opacity: 0.4; color: #990000; text-shadow: none;">${text[i]}</span>` :
+                                 brightness < 0.6 ? `<span style="opacity: 0.7; color: #990000; text-shadow: 0 0 2px #990000;">${text[i]}</span>` :
+                                 brightness < 0.9 ? `<span style="color: #990000; text-shadow: 0 0 5px #990000;">${text[i]}</span>` :
+                                 `<span style="color: #990000; text-shadow: 0 0 5px #990000, 0 0 10px #990000;">${text[i]}</span>`;
                 result += charStyle;
-                
-                // Add 1-3 random marks to some characters
                 if (Math.random() > 0.7) {
                     const numMarks = Math.floor(Math.random() * 3) + 1;
                     for (let j = 0; j < numMarks; j++) {
-                        const randomMark = diacriticalMarks[Math.floor(Math.random() * diacriticalMarks.length)];
-                        result += randomMark;
+                        result += diacriticalMarks[Math.floor(Math.random() * diacriticalMarks.length)];
                     }
                 }
             }
             return result;
         };
-        
-        // Format the visitor information
-        const ipInfo = glitchText(`IP: ${data.ip}`);
-        const ispInfo = glitchText(`ISP: ${data.connection?.isp || 'unknown'}`);
-        const countryInfo = glitchText(`Country: ${data.country || 'unknown'}`);
-        const coordsInfo = glitchText(`Location: ${data.latitude || '??'}, ${data.longitude || '??'}`);
-        
-        // Set the content with line breaks
-        visitorInfoElement.innerHTML = `${ipInfo}<br>${ispInfo}<br>${countryInfo}<br>${coordsInfo}`;
-        
-        // Ensure the element is visible and positioned correctly
+        visitorInfoElement.innerHTML = `${glitchText(`IP: ${data.ip}`)}<br>${glitchText(`ISP: ${data.connection?.isp || 'unknown'}`)}<br>${glitchText(`Country: ${data.country || 'unknown'}`)}<br>${glitchText(`Location: ${data.latitude || '??'}, ${data.longitude || '??'}`)}`;
         visitorInfoElement.style.position = 'relative';
         visitorInfoElement.style.zIndex = '1000';
     }
-    
-    // Show notification helper function
+
     function showNotification(message, duration = 1500) {
-        // Remove any existing notifications
         const existingNotifications = document.querySelectorAll('.clipboard-notification');
-        existingNotifications.forEach(notification => {
-            document.body.removeChild(notification);
-        });
-        
-        // Create notification element
+        existingNotifications.forEach(notification => document.body.removeChild(notification));
         const notification = document.createElement('div');
         notification.textContent = message;
         notification.className = 'clipboard-notification';
@@ -1206,10 +921,7 @@
         notification.style.zIndex = '9999';
         notification.style.opacity = '0';
         notification.style.transition = 'opacity 0.3s';
-        
         document.body.appendChild(notification);
-        
-        // Show and then hide the notification
         setTimeout(() => {
             notification.style.opacity = '1';
             setTimeout(() => {
@@ -1223,7 +935,53 @@
         }, 100);
     }
 
-</script>
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (pixelUpdateInterval) clearInterval(pixelUpdateInterval);
+            if (glitchInterval) clearInterval(glitchInterval);
+            updateApiStatus('Paused (Hidden)');
+        } else if (isPageReady) {
+            pixelUpdateInterval = setInterval(updateRandomImage, 5);
+            glitchInterval = setInterval(() => {
+                if (Math.random() < 0.03) {
+                    document.body.style.filter = 'invert(100%)';
+                    setTimeout(() => document.body.style.filter = 'none', 50 + Math.random() * 100);
+                }
+            }, 3000);
+            setTimeout(fetchDiscordActivity, 500);
+        }
+    });
 
+    window.addEventListener('online', () => {
+        updateApiStatus('Network Online');
+        setTimeout(fetchDiscordActivity, 1000);
+    });
+
+    window.addEventListener('offline', () => updateApiStatus('Network Offline', true));
+
+    window.addEventListener('beforeunload', () => {
+        if (pixelUpdateInterval) clearInterval(pixelUpdateInterval);
+        if (discordUpdateInterval) clearInterval(discordUpdateInterval);
+        if (glitchInterval) clearInterval(glitchInterval);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'd' && e.ctrlKey) {
+            e.preventDefault();
+            console.log('Force refreshing Discord data...');
+            retryCount = 0;
+            fetchDiscordActivity();
+        }
+    });
+
+    function setupClipboardCopy() {
+        const counterElement = document.getElementById('counter');
+        if (counterElement) {
+            counterElement.addEventListener('click', () => {
+                copyTextToClipboard('W̷̨̛h̶̢̛Y̵̧̛ ̸̢̛i̴̢̛ ̷̨̛A̶̢̛m̸̢̛ ̶̢̛H̷̨̛e̸̢̛Ŗ̵̛e̶̢̛');
+            });
+        }
+    }
+</script>
 </body>
 </html>
