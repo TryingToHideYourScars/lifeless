@@ -18,8 +18,8 @@
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" width="40" title="Ruby"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="40" title="C"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg" width="40" title="Rust"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" width="40" title="Batch / AHK"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/curl/curl-plain.svg" width="40" title="cURL"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" width="40" title="Batch / Shell"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/curl/curl-original.svg" width="40" title="cURL"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" width="40" title="Go"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="40" title="PHP"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40" title="TypeScript"/>
@@ -30,10 +30,10 @@
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="35" title="C++"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="35" title="React"/>
-<img src="https://img.shields.io/badge/Assembly-grey?style=flat&logo=gnuassembler&logoColor=white" />
-<img src="https://img.shields.io/badge/Krypton-grey?style=flat&logoColor=white" />
+<img src="https://img.shields.io/badge/Assembly-black?style=flat&logo=gnuemacs&logoColor=white" />
+<img src="https://img.shields.io/badge/Krypton-grey?style=flat&logo=koding&logoColor=white" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg" width="35" title="Lua"/>
-<img src="https://img.shields.io/badge/Unicon-grey?style=flat&logoColor=white" />
+<img src="https://img.shields.io/badge/Unicon-purple?style=flat&logoColor=white&logo=visualstudio" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vim/vim-original.svg" width="35" title="VimScript"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="35" title="SQL"/>
 
@@ -46,10 +46,9 @@
 
 ---
 
-<!-- Bloody footer SVG -->
+<!-- Bloody drip effect -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake-dark.svg" alt="snake" style="max-width: 100%; height: auto;" />
-  <img src="https://svgshare.com/i/12Vw.svg" width="100%" alt="bloody drip"/>
+  <img src="https://i.imgur.com/jPq3eRj.png" width="100%" alt="bloody drip"/>
 </p>
 
 </div>
