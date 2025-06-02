@@ -29,7 +29,7 @@
         color: #990000;
     }
 
-    /* Fade-in overlay with motion blur */
+    /* Slower fade-in overlay with motion blur */
     #fade-overlay {
         position: fixed;
         top: 0;
@@ -39,15 +39,15 @@
         background: #000000;
         opacity: 1;
         z-index: 2000;
-        animation: fadeOutWithBlur 0.6s ease-out forwards;
+        animation: fadeOutWithBlur 3s ease-out forwards; /* Extended to 3s */
         pointer-events: none;
     }
 
     @keyframes fadeOutWithBlur {
         0% {
             opacity: 1;
-            filter: blur(5px) brightness(0.8);
-            transform: scale(1.02);
+            filter: blur(8px) brightness(0.7); /* Increased blur for drama */
+            transform: scale(1.05); /* Slightly larger scale */
         }
         100% {
             opacity: 0;
@@ -104,6 +104,7 @@
         height: 480px;
     }
 
+    /* Improved Discord Activity Frame */
     #discord-frame {
         position: absolute;
         top: 50%;
@@ -112,31 +113,31 @@
         width: 320px;
         height: 160px;
         background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-        border: 1px solid #d2738a;
-        border-radius: 8px;
+        border: 2px solid #d2738a; /* Thicker border */
+        border-radius: 12px; /* Softer corners */
         box-shadow: 
-            0 0 15px rgba(210, 115, 138, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            0 0 20px rgba(210, 115, 138, 0.5), /* Stronger outer shadow */
+            inset 0 0 10px rgba(210, 115, 138, 0.2); /* Added inner glow */
         z-index: 200;
-        padding: 16px;
-        backdrop-filter: blur(15px);
+        padding: 20px; /* Increased padding */
+        backdrop-filter: blur(20px); /* Enhanced blur */
         animation: frameGlow 3s ease-in-out infinite alternate;
         display: flex;
-        gap: 12px;
+        gap: 14px; /* Slightly larger gap */
     }
 
     @keyframes frameGlow {
         0% { 
             box-shadow: 
-                0 0 15px rgba(210, 115, 138, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 0 20px rgba(210, 115, 138, 0.5),
+                inset 0 0 10px rgba(210, 115, 138, 0.2);
             border-color: #d2738a;
         }
         100% { 
             box-shadow: 
-                0 0 20px rgba(210, 115, 138, 0.6),
-                0 0 30px rgba(210, 115, 138, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 0 30px rgba(210, 115, 138, 0.7),
+                0 0 40px rgba(210, 115, 138, 0.4),
+                inset 0 0 10px rgba(210, 115, 138, 0.3);
             border-color: #e085a0;
         }
     }
@@ -154,8 +155,8 @@
         align-items: center;
         justify-content: center;
         background: linear-gradient(135deg, #d2738a 0%, #e085a0 100%);
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(210, 115, 138, 0.3);
+        border-radius: 10px; /* Softer corners */
+        box-shadow: 0 3px 10px rgba(210, 115, 138, 0.4); /* Enhanced shadow */
         position: relative;
         overflow: hidden;
     }
@@ -163,9 +164,9 @@
     .album-cover {
         width: 80px;
         height: 80px;
-        border-radius: 6px;
+        border-radius: 8px; /* Softer corners */
         object-fit: cover;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
         animation: albumSpin 0s linear infinite;
     }
 
@@ -294,9 +295,10 @@
         font-style: italic;
     }
 
+    /* Fixed Spotify activity to match pink theme */
     .spotify-activity {
-        background: linear-gradient(135deg, rgba(30, 215, 96, 0.2) 0%, rgba(30, 215, 96, 0.1) 100%);
-        border-color: rgba(30, 215, 96, 0.5);
+        background: linear-gradient(135deg, rgba(210, 115, 138, 0.2) 0%, rgba(224, 133, 160, 0.1) 100%); /* Pink gradient */
+        border-color: rgba(210, 115, 138, 0.5); /* Pink border */
     }
 
     .game-activity {
@@ -317,7 +319,7 @@
         margin-top: 5px;
         font-style: italic;
         opacity: 0;
-        animation: fadeUp 2s ease-in-out forwards, flicker 8s infinite 2s;
+        animation: fadeUp 2s ease-in-out forwards, flicker 8s infinite 3s; /* Adjusted delay */
         text-shadow: 0 0 5px #990000, 0 0 10px #990000;
         position: relative;
         z-index: 1000;
@@ -358,7 +360,7 @@
     #god {
         opacity: 0;
         animation: fadeUp 2s ease-in-out forwards;
-        animation-delay: 0.6s; /* Adjusted to sync with fade-in */
+        animation-delay: 3s; /* Synced with fade overlay */
         width: 100%;
         height: 100%;
         position: absolute;
@@ -384,8 +386,8 @@
         font-style: italic;
         color: #990000;
         opacity: 0;
-        animation: fadeUp 2s ease-in-out forwards, shake 5s infinite 2s;
-        animation-delay: 0.6s; /* Adjusted to sync with fade-in */
+        animation: fadeUp 2s ease-in-out forwards, shake 5s infinite 3s; /* Adjusted delay */
+        animation-delay: 3s; /* Synced with fade overlay */
         text-shadow: 0 0 5px #990000, 0 0 10px #990000;
     }
 
@@ -422,13 +424,13 @@
         color: #990000;
         font-size: 10px;
         font-family: monospace;
-        z-index: 2001; /* Increased to appear above fade overlay */
+        z-index: 2001;
         padding: 5px 8px;
         background: rgba(0, 0, 0, 0.7);
         border-radius: 4px;
         border: 1px solid #990000;
         opacity: 0;
-        animation: fadeInApi 0.6s ease-out forwards; /* Fade-in for API status */
+        animation: fadeInApi 0.6s ease-out forwards;
     }
 
     @keyframes fadeInApi {
@@ -438,7 +440,7 @@
     </style>
 </head>
 <body>
-    <div id="fade-overlay"></div> <!-- Added fade-in overlay -->
+    <div id="fade-overlay"></div>
     <div id="blood-splatter"></div>
     <div id="static"></div>
     <div id="rgbFilter"></div>
@@ -501,16 +503,12 @@
     function initializePage() {
         createInitialGrid();
         
-        // Start pixel animation
         pixelUpdateInterval = setInterval(updateRandomImage, 5);
         
-        // Immediate Discord fetch
-        fetchDiscordActivity();
+        fetchDiscordActivity(); // Immediate fetch
         
-        // Update Discord activity every 5 seconds for faster updates
-        discordUpdateInterval = setInterval(fetchDiscordActivity, 5000);
+        discordUpdateInterval = setInterval(fetchDiscordActivity, 5000); // Keep 5s for rate limit safety
         
-        // Add random screen glitches
         glitchInterval = setInterval(function() {
             if (Math.random() < 0.03) {
                 document.body.style.filter = 'invert(100%)';
@@ -576,7 +574,7 @@
             updateApiStatus('Fetching...');
             
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000); // Reduced timeout for faster response
+            const timeoutId = setTimeout(() => controller.abort(), 1000); // 1s timeout
             
             const response = await fetch(`https://api.lanyard.rest/v1/users/${USER_ID}`, {
                 method: 'GET',
@@ -618,7 +616,7 @@
             }
             
             if (retryCount < MAX_RETRIES) {
-                const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 10000); // Reduced max delay
+                const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 5000); // Max 5s retry
                 setTimeout(fetchDiscordActivity, retryDelay);
                 updateApiStatus(`Retry in ${Math.ceil(retryDelay/1000)}s`, true);
             } else {
@@ -880,7 +878,7 @@
 
     window.addEventListener('online', function() {
         updateApiStatus('Network Online');
-        setTimeout(fetchDiscordActivity, 500); // Reduced delay
+        setTimeout(fetchDiscordActivity, 500);
     });
 
     window.addEventListener('offline', function() {
