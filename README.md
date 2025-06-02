@@ -48,7 +48,7 @@
 
 <!-- Bloody drip effect from your link -->
 <p align="center">
-  <img src="https://c.tenor.com/opJeYcuQv9wAAAAd/tenor.gif" width="100%" alt="girl"/>
+  <img src="https://c.tenor.com/H5lTJExTRvMAAAAd/tenor.gif" width="100%" alt="girl"/>
 </p>
 
 </div>
